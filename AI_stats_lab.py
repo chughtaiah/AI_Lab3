@@ -1,144 +1,173 @@
 """
-ai_stats_lab.py
-AI Mathematical Tools – Probability & Random Variables
+Linear & Logistic Regression Lab
 
-Instructions:
-- Implement ALL functions.
-- Do NOT change function names or signatures.
-- Do NOT print inside functions.
-- You may use: math, numpy, matplotlib.
+Follow the instructions in each function carefully.
+DO NOT change function names.
+Use random_state=42 everywhere required.
 """
 
-import math
 import numpy as np
-import matplotlib.pyplot as plt
+
+from sklearn.datasets import load_diabetes, load_breast_cancer
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.metrics import (
+    mean_squared_error,
+    r2_score,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix
+)
 
 
-# ============================================================
-# Part 1 — Probability Foundations
-# ============================================================
+# =========================================================
+# QUESTION 1 – Linear Regression Pipeline (Diabetes)
+# =========================================================
 
-def probability_union(PA, PB, PAB):
+def diabetes_linear_pipeline():
     """
-    P(A ∪ B) = P(A) + P(B) - P(A ∩ B)
+    STEP 1: Load diabetes dataset.
+    STEP 2: Split into train and test (80-20).
+            Use random_state=42.
+    STEP 3: Standardize features using StandardScaler.
+            IMPORTANT:
+            - Fit scaler only on X_train
+            - Transform both X_train and X_test
+    STEP 4: Train LinearRegression model.
+    STEP 5: Compute:
+            - train_mse
+            - test_mse
+            - train_r2
+            - test_r2
+    STEP 6: Identify indices of top 3 features
+            with largest absolute coefficients.
+
+    RETURN:
+        train_mse,
+        test_mse,
+        train_r2,
+        test_r2,
+        top_3_feature_indices (list length 3)
     """
-    pass
+
+    raise NotImplementedError
 
 
-def conditional_probability(PAB, PB):
+# =========================================================
+# QUESTION 2 – Cross-Validation (Linear Regression)
+# =========================================================
+
+def diabetes_cross_validation():
     """
-    P(A|B) = P(A ∩ B) / P(B)
+    STEP 1: Load diabetes dataset.
+    STEP 2: Standardize entire dataset (after splitting is NOT needed for CV,
+            but use pipeline logic manually).
+    STEP 3: Perform 5-fold cross-validation
+            using LinearRegression.
+            Use scoring='r2'.
+
+    STEP 4: Compute:
+            - mean_r2
+            - std_r2
+
+    RETURN:
+        mean_r2,
+        std_r2
     """
-    pass
+
+    raise NotImplementedError
 
 
-def are_independent(PA, PB, PAB, tol=1e-9):
+# =========================================================
+# QUESTION 3 – Logistic Regression Pipeline (Cancer)
+# =========================================================
+
+def cancer_logistic_pipeline():
     """
-    True if:
-        |P(A ∩ B) - P(A)P(B)| < tol
+    STEP 1: Load breast cancer dataset.
+    STEP 2: Split into train-test (80-20).
+            Use random_state=42.
+    STEP 3: Standardize features.
+    STEP 4: Train LogisticRegression(max_iter=5000).
+    STEP 5: Compute:
+            - train_accuracy
+            - test_accuracy
+            - precision
+            - recall
+            - f1
+            - confusion matrix (optional to compute but not return)
+
+    In comments:
+        Explain what a False Negative represents medically.
+
+    RETURN:
+        train_accuracy,
+        test_accuracy,
+        precision,
+        recall,
+        f1
     """
-    pass
+
+    raise NotImplementedError
 
 
-def bayes_rule(PBA, PA, PB):
+# =========================================================
+# QUESTION 4 – Logistic Regularization Path
+# =========================================================
+
+def cancer_logistic_regularization():
     """
-    P(A|B) = P(B|A)P(A) / P(B)
+    STEP 1: Load breast cancer dataset.
+    STEP 2: Split into train-test (80-20).
+    STEP 3: Standardize features.
+    STEP 4: For C in [0.01, 0.1, 1, 10, 100]:
+            - Train LogisticRegression(max_iter=5000, C=value)
+            - Compute train accuracy
+            - Compute test accuracy
+
+    STEP 5: Store results in dictionary:
+            {
+                C_value: (train_accuracy, test_accuracy)
+            }
+
+    In comments:
+        - What happens when C is very small?
+        - What happens when C is very large?
+        - Which case causes overfitting?
+
+    RETURN:
+        results_dictionary
     """
-    pass
+
+    raise NotImplementedError
 
 
-# ============================================================
-# Part 2 — Bernoulli Distribution
-# ============================================================
+# =========================================================
+# QUESTION 5 – Cross-Validation (Logistic Regression)
+# =========================================================
 
-def bernoulli_pmf(x, theta):
+def cancer_cross_validation():
     """
-    f(x, theta) = theta^x (1-theta)^(1-x)
+    STEP 1: Load breast cancer dataset.
+    STEP 2: Standardize entire dataset.
+    STEP 3: Perform 5-fold cross-validation
+            using LogisticRegression(C=1, max_iter=5000).
+            Use scoring='accuracy'.
+
+    STEP 4: Compute:
+            - mean_accuracy
+            - std_accuracy
+
+    In comments:
+        Explain why cross-validation is especially
+        important in medical diagnosis problems.
+
+    RETURN:
+        mean_accuracy,
+        std_accuracy
     """
-    pass
 
-
-def bernoulli_theta_analysis(theta_values):
-    """
-    Returns:
-        (theta, P0, P1, is_symmetric)
-    """
-    pass
-
-
-# ============================================================
-# Part 3 — Normal Distribution
-# ============================================================
-
-def normal_pdf(x, mu, sigma):
-    """
-    Normal PDF:
-        1/(sqrt(2π)σ) * exp(-(x-μ)^2 / (2σ^2))
-    """
-    pass
-
-
-def normal_histogram_analysis(mu_values,
-                              sigma_values,
-                              n_samples=10000,
-                              bins=30):
-    """
-    For each (mu, sigma):
-
-    Return:
-        (
-            mu,
-            sigma,
-            sample_mean,
-            theoretical_mean,
-            mean_error,
-            sample_variance,
-            theoretical_variance,
-            variance_error
-        )
-    """
-    pass
-
-
-# ============================================================
-# Part 4 — Uniform Distribution
-# ============================================================
-
-def uniform_mean(a, b):
-    """
-    (a + b) / 2
-    """
-    pass
-
-
-def uniform_variance(a, b):
-    """
-    (b - a)^2 / 12
-    """
-    pass
-
-
-def uniform_histogram_analysis(a_values,
-                               b_values,
-                               n_samples=10000,
-                               bins=30):
-    """
-    For each (a, b):
-
-    Return:
-        (
-            a,
-            b,
-            sample_mean,
-            theoretical_mean,
-            mean_error,
-            sample_variance,
-            theoretical_variance,
-            variance_error
-        )
-    """
-    pass
-
-
-if __name__ == "__main__":
-    print("Implement all required functions.")
+    raise NotImplementedError
