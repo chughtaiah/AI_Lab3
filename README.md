@@ -1,4 +1,4 @@
-# Linear & Logistic Regression (3 Hours)
+# Linear & Logistic Regression
 
 This lab focuses ONLY on:
 - Linear Regression (Diabetes dataset)
